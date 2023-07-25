@@ -18,18 +18,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ModEvents {
 
     @SubscribeEvent
-    public static void registerEntities(
-        RegistryEvent.Register<EntityType<?>> evt
-    ) {
-        SpawnPlacements.register(
-            ModEntities.ENLIVENED_BLOCK.get(),
-            SpawnPlacements.Type.ON_GROUND,
-            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-            Mob::checkMobSpawnRules
-        );
-    }
-
-    @SubscribeEvent
     public static void registerEntityAttributes(
         EntityAttributeCreationEvent event
     ) {

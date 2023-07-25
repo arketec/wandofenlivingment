@@ -30,7 +30,14 @@ public class EnlivenedBlockRenderer
     public ResourceLocation getTextureLocation(
         EnlivenedBlockEntity animatedBlock
     ) {
-        String cacheKey = animatedBlock.blockID.getRegistryName().toString();
+        if (animatedBlock.blockEnlivened == null) {
+            animatedBlock.setBlockEnlivened(
+                animatedBlock.getDefaultBlockEnlivened()
+            );
+        }
+        String cacheKey = animatedBlock.blockEnlivened
+            .getRegistryName()
+            .toString();
         ResourceLocation cached = (ResourceLocation) resourceCache.getOrDefault(
             cacheKey,
             null
@@ -38,27 +45,21 @@ public class EnlivenedBlockRenderer
         if (cached != null) {
             return cached;
         }
-        // this is way too slow
-        String blockPath = Minecraft
+
+        ResourceLocation enlivenedBlockResourceLocation = Minecraft
             .getInstance()
             .getBlockRenderer()
             .getBlockModelShaper()
             .getTexture(
-                animatedBlock.blockID.defaultBlockState(),
+                animatedBlock.blockEnlivened.defaultBlockState(),
                 Minecraft.getInstance().level,
                 animatedBlock.blockPosition()
             )
-            .getName()
-            .toString();
-        String modName = "minecraft";
-        if (blockPath.contains(":")) {
-            modName = blockPath.split(":")[0];
-            blockPath = blockPath.split(":")[1];
-        }
+            .getName();
 
         ResourceLocation rtn = new ResourceLocation(
-            modName,
-            "textures/" + blockPath + ".png"
+            enlivenedBlockResourceLocation.getNamespace(),
+            "textures/" + enlivenedBlockResourceLocation.getPath() + ".png"
         );
         resourceCache.put(cacheKey, rtn);
         return rtn;

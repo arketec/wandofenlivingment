@@ -26,17 +26,14 @@ public class EnlivenedBlockEntity
     extends Monster
     implements IEntityAdditionalSpawnData {
 
-    public Block blockID;
+    public Block blockEnlivened;
 
     public EnlivenedBlockEntity(
         EntityType<? extends EnlivenedBlockEntity> type,
         Level level
     ) {
         super(type, level);
-        blockID =
-            ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation("minecraft", "stone")
-            );
+        blockEnlivened = getDefaultBlockEnlivened();
     }
 
     @Override
@@ -62,8 +59,14 @@ public class EnlivenedBlockEntity
             .add(Attributes.FOLLOW_RANGE, 4.0D);
     }
 
-    public void setBlock(Block blockID) {
-        this.blockID = blockID;
+    public void setBlockEnlivened(Block block) {
+        this.blockEnlivened = block;
+    }
+
+    public Block getDefaultBlockEnlivened() {
+        return ForgeRegistries.BLOCKS.getValue(
+            new ResourceLocation("minecraft", "stone")
+        );
     }
 
     @Override
@@ -73,18 +76,20 @@ public class EnlivenedBlockEntity
 
     @Override
     protected void dropCustomDeathLoot(
-        DamageSource p_21018_,
+        DamageSource damageSource,
         int p_21019_,
         boolean p_21020_
     ) {
-        if (!this.getLevel().isClientSide()) this.getLevel()
+        if (
+            !this.getLevel().isClientSide() && this.blockEnlivened != null
+        ) this.getLevel()
             .addFreshEntity(
                 new ItemEntity(
                     getLevel(),
                     this.getX(),
                     this.getY(),
                     this.getZ(),
-                    new ItemStack(this.blockID.asItem())
+                    new ItemStack(this.blockEnlivened.asItem())
                 )
             );
     }
@@ -97,32 +102,38 @@ public class EnlivenedBlockEntity
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("block_name", blockID.getRegistryName().toString());
+        if (blockEnlivened == null) {
+            return;
+        }
+        tag.putString(
+            "block_name",
+            blockEnlivened.getRegistryName().toString()
+        );
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        blockID =
+        var blockName = tag.getString("block_name");
+        if (blockName != null) blockEnlivened =
             ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation
-                    .read(tag.getString("block_name"))
-                    .getOrThrow(false, s -> {})
-            );
+                ResourceLocation.read(blockName).getOrThrow(false, s -> {})
+            ); else blockEnlivened = getDefaultBlockEnlivened();
     }
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeUtf(blockID.getRegistryName().toString());
+        if (blockEnlivened != null) buffer.writeUtf(
+            blockEnlivened.getRegistryName().toString()
+        );
     }
 
     @Override
     public void readSpawnData(FriendlyByteBuf additionalData) {
-        blockID =
+        var blockName = additionalData.readUtf();
+        if (blockName != null) blockEnlivened =
             ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation
-                    .read(additionalData.readUtf())
-                    .getOrThrow(false, s -> {})
-            );
+                ResourceLocation.read(blockName).getOrThrow(false, s -> {})
+            ); else blockEnlivened = getDefaultBlockEnlivened();
     }
 }
