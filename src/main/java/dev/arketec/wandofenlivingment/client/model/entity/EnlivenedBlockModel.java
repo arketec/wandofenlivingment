@@ -19,7 +19,7 @@ public class EnlivenedBlockModel<T extends EnlivenedBlockEntity>
 
     public static final ModelLayerLocation LAYER_LOCATION =
         new ModelLayerLocation(
-            new ResourceLocation(WandOfEnlivingment.MODID, "animated_block"),
+            new ResourceLocation(WandOfEnlivingment.MODID, "enlivened_block"),
             "main"
         );
     private final ModelPart body;

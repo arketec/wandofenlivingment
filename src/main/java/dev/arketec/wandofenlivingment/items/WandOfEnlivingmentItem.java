@@ -61,7 +61,21 @@ public class WandOfEnlivingmentItem extends Item {
                     0.2F,
                     1.0F
                 );
-                stack.setDamageValue(stack.getDamageValue() - 1);
+
+                if (!context.getPlayer().isCreative()) stack.setDamageValue(
+                    stack.getDamageValue() + 1
+                );
+                if (stack.getDamageValue() > stack.getMaxDamage()) {
+                    stack.setCount(0);
+                    level.playSound(
+                        null,
+                        pos,
+                        SoundEvents.ITEM_BREAK,
+                        SoundSource.NEUTRAL,
+                        0.2F,
+                        1.0F
+                    );
+                }
                 return InteractionResult.SUCCESS;
             }
         }
