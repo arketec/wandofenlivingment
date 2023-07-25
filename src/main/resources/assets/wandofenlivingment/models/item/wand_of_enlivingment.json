@@ -1,0 +1,19 @@
+{
+
+  "parent": "item/generated",
+
+  "textures": {
+
+    "layer0": "wandofenlivingment:items/wand_of_enlivingment"
+
+  },
+  "display": {
+
+    "gui": {
+      "rotation": [ 0, 0, 0 ],
+      "translation": [ 1, -2, 0],
+      "scale":[ 0.4, 0.8, 0.4 ]
+    }
+  }
+
+}
