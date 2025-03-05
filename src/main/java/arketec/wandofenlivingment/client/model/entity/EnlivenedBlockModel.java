@@ -1,9 +1,9 @@
-package dev.arketec.wandofenlivingment.client.model.entity;
+package arketec.wandofenlivingment.client.model.entity;
 
+import arketec.wandofenlivingment.WandOfEnlivingment;
+import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.arketec.wandofenlivingment.WandOfEnlivingment;
-import dev.arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

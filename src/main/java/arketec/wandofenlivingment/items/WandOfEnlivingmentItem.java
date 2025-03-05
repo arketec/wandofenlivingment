@@ -1,8 +1,8 @@
-package dev.arketec.wandofenlivingment.items;
+package arketec.wandofenlivingment.items;
 
-import dev.arketec.wandofenlivingment.configuration.ModConfig;
-import dev.arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
-import dev.arketec.wandofenlivingment.registration.ModEntities;
+import arketec.wandofenlivingment.configuration.ModConfig;
+import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
+import arketec.wandofenlivingment.registration.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -20,11 +20,7 @@ public class WandOfEnlivingmentItem extends Item {
 
     public WandOfEnlivingmentItem() {
         super(
-            new Properties()
-                .tab(CreativeModeTab.TAB_TOOLS)
-                .durability(64)
-                .setNoRepair()
-                .rarity(Rarity.EPIC)
+            new Properties().durability(64).setNoRepair().rarity(Rarity.EPIC)
         );
     }
 
@@ -85,7 +81,7 @@ public class WandOfEnlivingmentItem extends Item {
     private boolean isInDenyList(Block block) {
         return ModConfig.blockDenylist
             .get()
-            .contains(block.getRegistryName().toString());
+            .contains(block.getName().toString());
     }
 
     private boolean isAllowedBlockEntity(Block block) {
@@ -93,7 +89,7 @@ public class WandOfEnlivingmentItem extends Item {
             ModConfig.allowBlockEntities.get() ||
             ModConfig.blockAllowlist
                 .get()
-                .contains(block.getRegistryName().toString()) ||
+                .contains(block.getName().toString()) ||
             !(block instanceof EntityBlock)
         );
     }
@@ -103,10 +99,7 @@ public class WandOfEnlivingmentItem extends Item {
     }
 
     private boolean isFullBlock(BlockState state, Level level, BlockPos pos) {
-        return (
-            state.getMaterial().isSolid() &&
-            state.isCollisionShapeFullBlock(level, pos)
-        );
+        return (state.isSolid() && state.isCollisionShapeFullBlock(level, pos));
     }
 
     private boolean isAllowedToEnliven(

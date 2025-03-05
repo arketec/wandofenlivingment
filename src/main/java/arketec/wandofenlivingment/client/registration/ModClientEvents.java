@@ -1,9 +1,9 @@
-package dev.arketec.wandofenlivingment.client.registration;
+package arketec.wandofenlivingment.client.registration;
 
-import dev.arketec.wandofenlivingment.WandOfEnlivingment;
-import dev.arketec.wandofenlivingment.client.model.entity.EnlivenedBlockModel;
-import dev.arketec.wandofenlivingment.client.renderer.entity.EnlivenedBlockRenderer;
-import dev.arketec.wandofenlivingment.registration.ModEntities;
+import arketec.wandofenlivingment.WandOfEnlivingment;
+import arketec.wandofenlivingment.client.model.entity.EnlivenedBlockModel;
+import arketec.wandofenlivingment.client.renderer.entity.EnlivenedBlockRenderer;
+import arketec.wandofenlivingment.registration.ModEntities;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;

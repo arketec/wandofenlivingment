@@ -1,6 +1,6 @@
-package dev.arketec.wandofenlivingment.registration;
+package arketec.wandofenlivingment.registration;
 
-import dev.arketec.wandofenlivingment.items.WandOfEnlivingmentItem;
+import arketec.wandofenlivingment.items.WandOfEnlivingmentItem;
 import java.util.function.Supplier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;

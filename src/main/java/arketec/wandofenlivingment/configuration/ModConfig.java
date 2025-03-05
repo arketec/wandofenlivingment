@@ -1,4 +1,4 @@
-package dev.arketec.wandofenlivingment.configuration;
+package arketec.wandofenlivingment.configuration;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;

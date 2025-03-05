@@ -1,7 +1,7 @@
-package dev.arketec.wandofenlivingment.registration;
+package arketec.wandofenlivingment.registration;
 
-import dev.arketec.wandofenlivingment.WandOfEnlivingment;
-import dev.arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
+import arketec.wandofenlivingment.WandOfEnlivingment;
+import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

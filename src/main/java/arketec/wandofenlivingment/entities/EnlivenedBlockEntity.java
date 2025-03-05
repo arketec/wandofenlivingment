@@ -1,8 +1,9 @@
-package dev.arketec.wandofenlivingment.entities;
+package arketec.wandofenlivingment.entities;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -81,11 +82,11 @@ public class EnlivenedBlockEntity
         boolean p_21020_
     ) {
         if (
-            !this.getLevel().isClientSide() && this.blockEnlivened != null
-        ) this.getLevel()
+            !this.level().isClientSide() && this.blockEnlivened != null
+        ) this.level()
             .addFreshEntity(
                 new ItemEntity(
-                    getLevel(),
+                    level(),
                     this.getX(),
                     this.getY(),
                     this.getZ(),
@@ -95,7 +96,7 @@ public class EnlivenedBlockEntity
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -107,7 +108,10 @@ public class EnlivenedBlockEntity
         }
         tag.putString(
             "block_name",
-            blockEnlivened.getRegistryName().toString()
+            blockEnlivened
+                .getDescriptionId()
+                .replace("block.", "")
+                .replace(".", ":")
         );
     }
 
@@ -124,7 +128,10 @@ public class EnlivenedBlockEntity
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
         if (blockEnlivened != null) buffer.writeUtf(
-            blockEnlivened.getRegistryName().toString()
+            blockEnlivened
+                .getDescriptionId()
+                .replace("block.", "")
+                .replace(".", ":")
         );
     }
 

@@ -1,7 +1,7 @@
-package dev.arketec.wandofenlivingment;
+package arketec.wandofenlivingment;
 
-import dev.arketec.wandofenlivingment.configuration.ModConfig;
-import dev.arketec.wandofenlivingment.registration.RegistrationManager;
+import arketec.wandofenlivingment.configuration.ModConfig;
+import arketec.wandofenlivingment.registration.RegistrationManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 

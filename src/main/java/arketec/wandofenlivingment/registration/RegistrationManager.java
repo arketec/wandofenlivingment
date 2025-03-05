@@ -1,6 +1,6 @@
-package dev.arketec.wandofenlivingment.registration;
+package arketec.wandofenlivingment.registration;
 
-import dev.arketec.wandofenlivingment.WandOfEnlivingment;
+import arketec.wandofenlivingment.WandOfEnlivingment;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -8,7 +8,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistrationManager {
 
@@ -16,7 +15,7 @@ public class RegistrationManager {
         ForgeRegistries.ITEMS
     );
     public static final DeferredRegister<EntityType<?>> ENTITIES = create(
-        ForgeRegistries.ENTITIES
+        ForgeRegistries.ENTITY_TYPES
     );
 
     public static void register() {
@@ -28,9 +27,7 @@ public class RegistrationManager {
         ModEntities.register();
     }
 
-    private static <
-        T extends IForgeRegistryEntry<T>
-    > DeferredRegister<T> create(IForgeRegistry<T> registry) {
+    private static <T> DeferredRegister<T> create(IForgeRegistry<T> registry) {
         return DeferredRegister.create(registry, WandOfEnlivingment.MODID);
     }
 }

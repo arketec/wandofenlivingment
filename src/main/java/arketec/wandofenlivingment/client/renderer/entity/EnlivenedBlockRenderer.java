@@ -1,7 +1,7 @@
-package dev.arketec.wandofenlivingment.client.renderer.entity;
+package arketec.wandofenlivingment.client.renderer.entity;
 
-import dev.arketec.wandofenlivingment.client.model.entity.EnlivenedBlockModel;
-import dev.arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
+import arketec.wandofenlivingment.client.model.entity.EnlivenedBlockModel;
+import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -30,20 +30,19 @@ public class EnlivenedBlockRenderer
     public ResourceLocation getTextureLocation(
         EnlivenedBlockEntity animatedBlock
     ) {
+        boolean noCache = false;
+        String cacheKey = animatedBlock.blockEnlivened.getName().getString();
         if (animatedBlock.blockEnlivened == null) {
             animatedBlock.setBlockEnlivened(
                 animatedBlock.getDefaultBlockEnlivened()
             );
-        }
-        String cacheKey = animatedBlock.blockEnlivened
-            .getRegistryName()
-            .toString();
-        ResourceLocation cached = (ResourceLocation) resourceCache.getOrDefault(
-            cacheKey,
-            null
-        );
-        if (cached != null) {
-            return cached;
+            noCache = true;
+        } else {
+            ResourceLocation cached =
+                (ResourceLocation) resourceCache.getOrDefault(cacheKey, null);
+            if (cached != null) {
+                return cached;
+            }
         }
 
         ResourceLocation enlivenedBlockResourceLocation = Minecraft
@@ -52,16 +51,17 @@ public class EnlivenedBlockRenderer
             .getBlockModelShaper()
             .getTexture(
                 animatedBlock.blockEnlivened.defaultBlockState(),
-                Minecraft.getInstance().level,
+                animatedBlock.level(),
                 animatedBlock.blockPosition()
             )
-            .getName();
+            .contents()
+            .name();
 
         ResourceLocation rtn = new ResourceLocation(
             enlivenedBlockResourceLocation.getNamespace(),
             "textures/" + enlivenedBlockResourceLocation.getPath() + ".png"
         );
-        resourceCache.put(cacheKey, rtn);
+        if (!noCache) resourceCache.put(cacheKey, rtn);
         return rtn;
     }
 }
