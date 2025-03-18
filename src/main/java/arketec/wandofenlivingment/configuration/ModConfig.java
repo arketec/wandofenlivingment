@@ -15,6 +15,8 @@ public class ModConfig {
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> blockDenylist;
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> blockAllowlist;
     public static ForgeConfigSpec.BooleanValue allowBlockEntities;
+    public static ForgeConfigSpec.ConfigValue<Integer> wandDurability;
+    public static ForgeConfigSpec.BooleanValue allowMending;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -55,6 +57,18 @@ public class ModConfig {
                             .matcher(e.toString())
                             .matches()
                 );
+
+        wandDurability =
+            builder
+                .comment("number of uses per wand")
+                .define("wandDurability", 64);
+
+        allowMending =
+            builder
+                .comment(
+                    "allows the mending enchantment to be applied to the wand"
+                )
+                .define("allowMending", false);
 
         builder.pop();
 

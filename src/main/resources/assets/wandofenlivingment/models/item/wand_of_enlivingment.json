@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "wandofenlivingment:items/wand_of_enlivingment"
+    "layer0": "wandofenlivingment:item/wand_of_enlivingment"
   },
   "display": {
     "gui": {

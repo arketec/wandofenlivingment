@@ -10,6 +10,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -20,7 +22,10 @@ public class WandOfEnlivingmentItem extends Item {
 
     public WandOfEnlivingmentItem() {
         super(
-            new Properties().durability(64).setNoRepair().rarity(Rarity.EPIC)
+            new Properties()
+                .durability(ModConfig.wandDurability.get())
+                .setNoRepair()
+                .rarity(Rarity.EPIC)
         );
     }
 
@@ -78,6 +83,21 @@ public class WandOfEnlivingmentItem extends Item {
         return InteractionResult.FAIL;
     }
 
+    @Override
+    public boolean canApplyAtEnchantingTable(
+        ItemStack stack,
+        Enchantment enchantment
+    ) {
+        if (
+            enchantment == Enchantments.MENDING && !this.canApplyMending()
+        ) return false;
+        return super.canApplyAtEnchantingTable(stack, enchantment);
+    }
+
+    public boolean canApplyMending() {
+        return isAllowedMending();
+    }
+
     private boolean isInDenyList(Block block) {
         return ModConfig.blockDenylist
             .get()
@@ -113,5 +133,9 @@ public class WandOfEnlivingmentItem extends Item {
             isFullBlock(state, level, pos) &&
             !isExplicitlyDenied(state.getBlock())
         );
+    }
+
+    private boolean isAllowedMending() {
+        return ModConfig.allowMending.get();
     }
 }
