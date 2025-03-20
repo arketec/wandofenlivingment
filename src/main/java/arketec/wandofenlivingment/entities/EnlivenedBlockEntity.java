@@ -1,5 +1,6 @@
 package arketec.wandofenlivingment.entities;
 
+import arketec.wandofenlivingment.util.EnlivenedBlockHelpers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -108,10 +109,9 @@ public class EnlivenedBlockEntity
         }
         tag.putString(
             "block_name",
-            blockEnlivened
-                .getDescriptionId()
-                .replace("block.", "")
-                .replace(".", ":")
+            EnlivenedBlockHelpers.getBlockNameAsResourceLocationString(
+                blockEnlivened
+            )
         );
     }
 
@@ -128,10 +128,9 @@ public class EnlivenedBlockEntity
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
         if (blockEnlivened != null) buffer.writeUtf(
-            blockEnlivened
-                .getDescriptionId()
-                .replace("block.", "")
-                .replace(".", ":")
+            EnlivenedBlockHelpers.getBlockNameAsResourceLocationString(
+                blockEnlivened
+            )
         );
     }
 
