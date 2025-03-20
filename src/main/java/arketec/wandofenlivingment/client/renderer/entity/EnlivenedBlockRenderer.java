@@ -10,17 +10,19 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class EnlivenedBlockRenderer
     extends MobRenderer<EnlivenedBlockEntity, EnlivenedBlockModel<EnlivenedBlockEntity>> {
 
-    private static ConcurrentHashMap resourceCache = new ConcurrentHashMap();
+    private static final ConcurrentHashMap<String, ResourceLocation> resourceCache =
+        new ConcurrentHashMap<>();
 
     public EnlivenedBlockRenderer(EntityRendererProvider.Context context) {
         super(
             context,
-            new EnlivenedBlockModel(
+            new EnlivenedBlockModel<>(
                 context.bakeLayer(EnlivenedBlockModel.LAYER_LOCATION)
             ),
             0.5F
@@ -28,6 +30,7 @@ public class EnlivenedBlockRenderer
     }
 
     @Override
+    @NotNull
     public ResourceLocation getTextureLocation(
         EnlivenedBlockEntity enlivenedBlockEntity
     ) {
@@ -41,8 +44,10 @@ public class EnlivenedBlockRenderer
             );
             noCache = true;
         } else {
-            ResourceLocation cached =
-                (ResourceLocation) resourceCache.getOrDefault(cacheKey, null);
+            ResourceLocation cached = resourceCache.getOrDefault(
+                cacheKey,
+                null
+            );
             if (cached != null) {
                 return cached;
             }
