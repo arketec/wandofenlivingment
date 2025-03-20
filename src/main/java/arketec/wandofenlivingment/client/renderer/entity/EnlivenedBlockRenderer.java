@@ -4,6 +4,7 @@ import arketec.wandofenlivingment.client.model.entity.EnlivenedBlockModel;
 import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import arketec.wandofenlivingment.util.EnlivenedBlockHelpers;
 import java.util.concurrent.ConcurrentHashMap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,7 @@ public class EnlivenedBlockRenderer
         }
 
         ResourceLocation rtn = EnlivenedBlockHelpers.getTextureForBlock(
+            Minecraft.getInstance(),
             enlivenedBlockEntity
         );
         if (!noCache) resourceCache.put(cacheKey, rtn);

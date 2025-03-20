@@ -8,10 +8,10 @@ import net.minecraft.world.level.block.Block;
 public class EnlivenedBlockHelpers {
 
     public static ResourceLocation getTextureForBlock(
+        Minecraft instance,
         EnlivenedBlockEntity enlivenedBlockEntity
     ) {
-        ResourceLocation blockResource = Minecraft
-            .getInstance()
+        ResourceLocation blockResource = instance
             .getBlockRenderer()
             .getBlockModelShaper()
             .getTexture(
