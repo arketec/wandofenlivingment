@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" GN", " SG", "S  "],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "N": "minecraft:nether_star",
+    "S": "minecraft:stick"
+  },
+  "result": {
+    "id": "wandofenlivingment:wand_of_enlivingment",
+    "count": 1
+  }
+}
