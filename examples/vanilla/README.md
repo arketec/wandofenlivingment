@@ -10,6 +10,7 @@ Folder structure should look like this:
     MyWorld/
       datapacks/
         minecraft/
+          pack.mcmeta
           data/
             wandofenlivingment/
               recipe/
