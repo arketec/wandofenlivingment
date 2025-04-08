@@ -4,6 +4,7 @@ Copy all folders and files under minecraft/ (including minecraft/) into the root
 
 Folder structure should look like this:
 
+```
 /
   saves/
     MyWorld/
@@ -13,5 +14,6 @@ Folder structure should look like this:
             wandofenlivingment/
               recipe/
                 wand_of_enlivingment.json
+```
 
 

@@ -4,6 +4,8 @@ Copy all folders and files under scripts/ (including scripts/) into the root of 
 
 Folder structure should look like this:
 
+```
 /
   scripts/
     wand_of_enlivingment.zs
+```
