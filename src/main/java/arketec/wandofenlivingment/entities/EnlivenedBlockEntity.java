@@ -1,13 +1,13 @@
 package arketec.wandofenlivingment.entities;
 
 import arketec.wandofenlivingment.util.EnlivenedBlockHelpers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -20,13 +20,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
-public class EnlivenedBlockEntity
-    extends Monster
-    implements IEntityAdditionalSpawnData {
+public class EnlivenedBlockEntity extends Monster implements IEntityWithComplexSpawn {
 
     public Block blockEnlivened;
 
@@ -66,40 +62,36 @@ public class EnlivenedBlockEntity
     }
 
     public Block getDefaultBlockEnlivened() {
-        return ForgeRegistries.BLOCKS.getValue(
-            new ResourceLocation("minecraft", "stone")
+        return BuiltInRegistries.BLOCK.get(
+            ResourceLocation.tryBuild("minecraft", "stone")
         );
     }
 
     @Override
-    protected boolean shouldDropLoot() {
-        return true;
-    }
-
-    @Override
-    protected void dropCustomDeathLoot(
-        DamageSource damageSource,
-        int p_21019_,
-        boolean p_21020_
-    ) {
+    protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
         if (
-            !this.level().isClientSide() && this.blockEnlivened != null
-        ) this.level()
-            .addFreshEntity(
-                new ItemEntity(
-                    level(),
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
-                    new ItemStack(this.blockEnlivened.asItem())
-                )
-            );
+                !level.isClientSide() && this.blockEnlivened != null
+        ) level
+                .addFreshEntity(
+                        new ItemEntity(
+                                level,
+                                this.getX(),
+                                this.getY(),
+                                this.getZ(),
+                                new ItemStack(this.blockEnlivened.asItem())
+                        )
+                );
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
+    //    @Override
+//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+//        return NetworkHooks.getEntitySpawningPacket(this);
+//    }
+
+//    @Override
+//    public void sendPairingData(ServerPlayer serverPlayer, Consumer<CustomPacketPayload> bundleBuilder) {
+//        bundleBuilder()
+//    }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
@@ -120,13 +112,13 @@ public class EnlivenedBlockEntity
         super.readAdditionalSaveData(tag);
         var blockName = tag.getString("block_name");
         if (blockName != null) blockEnlivened =
-            ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.read(blockName).getOrThrow(false, s -> {})
+            BuiltInRegistries.BLOCK.get(
+                ResourceLocation.read(blockName).getOrThrow()
             ); else blockEnlivened = getDefaultBlockEnlivened();
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
         if (blockEnlivened != null) buffer.writeUtf(
             EnlivenedBlockHelpers.getBlockNameAsResourceLocationString(
                 blockEnlivened
@@ -135,11 +127,12 @@ public class EnlivenedBlockEntity
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
+    public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
         var blockName = additionalData.readUtf();
         if (blockName != null) blockEnlivened =
-            ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.read(blockName).getOrThrow(false, s -> {})
+            BuiltInRegistries.BLOCK.get(
+                ResourceLocation.read(blockName).getOrThrow()
             ); else blockEnlivened = getDefaultBlockEnlivened();
     }
+
 }

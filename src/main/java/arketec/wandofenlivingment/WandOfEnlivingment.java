@@ -1,20 +1,18 @@
 package arketec.wandofenlivingment;
 
-import arketec.wandofenlivingment.configuration.ModConfig;
+
 import arketec.wandofenlivingment.registration.RegistrationManager;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 
 @Mod(WandOfEnlivingment.MODID)
 public class WandOfEnlivingment {
 
     public static final String MODID = "wandofenlivingment";
 
-    public WandOfEnlivingment() {
-        ModConfig.loadConfig(
-            ModConfig.CONFIG_SPEC,
-            FMLPaths.CONFIGDIR.get().resolve("wandofenlivingment.toml")
-        );
+    public WandOfEnlivingment(ModContainer container) {
         RegistrationManager.register();
+        container.registerConfig(ModConfig.Type.STARTUP, arketec.wandofenlivingment.configuration.ModConfig.CONFIG_SPEC);
     }
 }

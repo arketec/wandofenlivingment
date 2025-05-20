@@ -1,6 +1,6 @@
 ### Vanilla datapack example
 
-Zip up all folders and files under mypack/ (excluding mypack/) into the root of your minecraft save file under saves/WORLDNAME/datapacks
+Zip up all folders and files under mypack/ (including mypack/) into the root of your minecraft save file under saves/WORLDNAME/datapacks
 
 Folder structure should look like this:
 
@@ -11,5 +11,3 @@ Folder structure should look like this:
       datapacks/
         mypack.zip
 ```
-
-
