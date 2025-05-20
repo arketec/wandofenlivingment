@@ -2,13 +2,13 @@ package arketec.wandofenlivingment.registration;
 
 import arketec.wandofenlivingment.WandOfEnlivingment;
 import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 
-@Mod.EventBusSubscriber(
+@EventBusSubscriber(
     modid = WandOfEnlivingment.MODID,
-    bus = Mod.EventBusSubscriber.Bus.MOD
+    bus = EventBusSubscriber.Bus.MOD
 )
 public class ModEvents {
 

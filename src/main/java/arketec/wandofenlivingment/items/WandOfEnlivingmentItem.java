@@ -5,13 +5,13 @@ import arketec.wandofenlivingment.entities.EnlivenedBlockEntity;
 import arketec.wandofenlivingment.registration.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -83,17 +83,6 @@ public class WandOfEnlivingmentItem extends Item {
         return InteractionResult.FAIL;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(
-        ItemStack stack,
-        Enchantment enchantment
-    ) {
-        if (
-            enchantment == Enchantments.MENDING && !this.canApplyMending()
-        ) return false;
-        return super.canApplyAtEnchantingTable(stack, enchantment);
-    }
-
     public boolean canApplyMending() {
         return isAllowedMending();
     }
@@ -105,11 +94,15 @@ public class WandOfEnlivingmentItem extends Item {
     }
 
     private boolean isAllowedBlockEntity(Block block) {
+        var blockName = block.toString();
         return (
             ModConfig.allowBlockEntities.get() ||
-            ModConfig.blockAllowlist
-                .get()
-                .contains(block.getName().toString()) ||
+                    ModConfig.blockAllowlist
+                            .get()
+                            .stream()
+                            .map(x -> String.format("Block{%s}", x))
+                            .toList()
+                            .contains(blockName) ||
             !(block instanceof EntityBlock)
         );
     }
@@ -120,6 +113,21 @@ public class WandOfEnlivingmentItem extends Item {
 
     private boolean isFullBlock(BlockState state, Level level, BlockPos pos) {
         return (state.isSolid() && state.isCollisionShapeFullBlock(level, pos));
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return true;
     }
 
     private boolean isAllowedToEnliven(

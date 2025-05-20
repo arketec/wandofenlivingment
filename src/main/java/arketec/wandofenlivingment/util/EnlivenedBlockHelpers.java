@@ -22,7 +22,7 @@ public class EnlivenedBlockHelpers {
             .contents()
             .name();
         var template = "textures/%s.png";
-        return new ResourceLocation(
+        return ResourceLocation.tryBuild(
             blockResource.getNamespace(),
             String.format(template, blockResource.getPath())
         );

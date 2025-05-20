@@ -2,16 +2,18 @@ package arketec.wandofenlivingment.registration;
 
 import arketec.wandofenlivingment.items.WandOfEnlivingmentItem;
 import java.util.Map;
+import java.util.Objects;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME)
 public class ForgeEvents {
 
     @SubscribeEvent
@@ -20,10 +22,15 @@ public class ForgeEvents {
         ItemStack right = event.getRight();
         if (left != null && right != null) {
             if (right.getItem() == Items.ENCHANTED_BOOK) {
-                Map<Enchantment, Integer> enchantments =
-                    EnchantmentHelper.getEnchantments(right);
-                if (
-                    enchantments.containsKey(Enchantments.MENDING) &&
+                var enchantments = EnchantmentHelper.getEnchantmentsForCrafting(
+                    right
+                );
+                var enchantmentKeySet = enchantments.keySet()
+                        .stream()
+                        .map(x -> x.unwrapKey().isPresent() ? x.unwrapKey().get(): null)
+                        .filter(Objects::nonNull)
+                        .toList();
+                if (enchantmentKeySet.contains(Enchantments.MENDING) &&
                     left.getItem() instanceof WandOfEnlivingmentItem wandOfEnlivingmentItem &&
                     !wandOfEnlivingmentItem.canApplyMending()
                 ) {
