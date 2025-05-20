@@ -11,5 +11,3 @@ Folder structure should look like this:
       datapacks/
         mypack.zip
 ```
-
-
