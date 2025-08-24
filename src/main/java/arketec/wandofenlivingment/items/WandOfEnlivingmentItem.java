@@ -17,6 +17,7 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
         super(new Properties()
                 .durability(ModStartupConfig.wandDurability.get())
                 .setNoRepair()
+                .stacksTo(1)
                 .rarity(Rarity.RARE));
     }
 
