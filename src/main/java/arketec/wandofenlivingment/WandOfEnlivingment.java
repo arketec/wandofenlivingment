@@ -1,6 +1,7 @@
 package arketec.wandofenlivingment;
 
-
+import arketec.wandofenlivingment.configuration.ModCommonConfig;
+import arketec.wandofenlivingment.configuration.ModStartupConfig;
 import arketec.wandofenlivingment.registration.RegistrationManager;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -13,6 +14,7 @@ public class WandOfEnlivingment {
 
     public WandOfEnlivingment(ModContainer container) {
         RegistrationManager.register();
-        container.registerConfig(ModConfig.Type.STARTUP, arketec.wandofenlivingment.configuration.ModConfig.CONFIG_SPEC);
+        container.registerConfig(ModConfig.Type.STARTUP, ModStartupConfig.CONFIG_SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, ModCommonConfig.CONFIG_SPEC);
     }
 }

@@ -1,4 +1,7 @@
 {
   "entity.wandofenlivingment.enlivened_block": "Enlivened Block",
-  "item.wandofenlivingment.wand_of_enlivingment": "Wand of Enlivingment"
+  "item.wandofenlivingment.fragile_wand_of_enlivingment": "Fragile Wand of Enlivingment",
+  "item.wandofenlivingment.wand_of_enlivingment": "Wand of Enlivingment",
+  "item.wandofenlivingment.greater_wand_of_enlivingment": "Greater Wand of Enlivingment",
+  "item.wandofenlivingment.creative_wand_of_enlivingment": "Creative Wand of Enlivingment"
 }

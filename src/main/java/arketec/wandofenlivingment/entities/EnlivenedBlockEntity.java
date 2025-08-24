@@ -83,16 +83,6 @@ public class EnlivenedBlockEntity extends Monster implements IEntityWithComplexS
                 );
     }
 
-    //    @Override
-//    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-//        return NetworkHooks.getEntitySpawningPacket(this);
-//    }
-
-//    @Override
-//    public void sendPairingData(ServerPlayer serverPlayer, Consumer<CustomPacketPayload> bundleBuilder) {
-//        bundleBuilder()
-//    }
-
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
