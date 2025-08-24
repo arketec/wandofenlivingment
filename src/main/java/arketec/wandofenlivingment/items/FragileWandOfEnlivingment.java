@@ -16,6 +16,7 @@ public class FragileWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
         super(new Properties()
                 .durability(ModStartupConfig.fragileWandDurability.get())
                 .setNoRepair()
+                .stacksTo(1)
                 .rarity(Rarity.UNCOMMON));
     }
 

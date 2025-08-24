@@ -51,7 +51,7 @@ public abstract class AbstractWandOfEnlivingmentItem extends Item {
                 level.addFreshEntity(enlivenedBlockEntity);
                 level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.HOSTILE, 0.2F, 1.0F);
 
-                if (stack.getDamageValue() >= stack.getMaxDamage()) {
+                if (stack.getMaxDamage() > 0 && stack.getDamageValue() >= stack.getMaxDamage()) {
                     stack.setCount(0);
                     level.playSound(null, pos, SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 0.2F, 1.0F);
                     stack.hurtAndBreak(1, context.getPlayer(), LivingEntity.getSlotForHand(context.getHand()));

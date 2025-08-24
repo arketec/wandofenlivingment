@@ -3,17 +3,19 @@ package arketec.wandofenlivingment.items;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
 public class CreativeWandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
 
     public CreativeWandOfEnlivingmentItem() {
-        super(new Properties().durability(0).rarity(Rarity.EPIC));
+        super(new Properties().rarity(Rarity.EPIC).stacksTo(1));
     }
 
     @Override
@@ -44,6 +46,18 @@ public class CreativeWandOfEnlivingmentItem extends AbstractWandOfEnlivingmentIt
     @Override
     protected boolean isAllowedBlockEntity(Block block) {
         return true;
+    }
+
+    @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        stack.set(DataComponents.UNBREAKABLE, new Unbreakable(true));
+        return stack;
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return false; // hide durability bar just in case
     }
 
     @Override
