@@ -11,34 +11,32 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 
-public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
-
-    public WandOfEnlivingmentItem() {
+public class FragileWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
+    public FragileWandOfEnlivingment() {
         super(new Properties()
-                .durability(ModStartupConfig.wandDurability.get())
+                .durability(ModStartupConfig.fragileWandDurability.get())
                 .setNoRepair()
-                .rarity(Rarity.RARE));
+                .rarity(Rarity.UNCOMMON));
     }
 
     @Override
     public boolean isEnchantable(ItemStack stack) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
-        return true;
+        return false;
     }
 
     @Override
     protected boolean isAllowedMending() {
-        return super.isAllowedMending()
-                || ModCommonConfig.wandConfig.allowMending().get();
+        return false;
     }
 
     @Override
@@ -50,15 +48,15 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
     protected boolean isNotInDenyList(Block block) {
         var blockName = BuiltInRegistries.BLOCK.getKey(block).toString();
         var denylist = BlockDenylist.fromConfig(
-                ModCommonConfig.wandConfig.blockDenylist().get());
+                ModCommonConfig.fragileWandConfig.blockDenylist().get());
 
         return super.isNotInDenyList(block) && !denylist.matches(blockName);
     }
 
     private boolean isAllowedBlock(Block block) {
         var blockName = BuiltInRegistries.BLOCK.getKey(block).toString();
-        return (ModCommonConfig.wandConfig.allowBlockEntities().get()
-                || ModCommonConfig.wandConfig.blockAllowlist().get().stream()
+        return (ModCommonConfig.fragileWandConfig.allowBlockEntities().get()
+                || ModCommonConfig.fragileWandConfig.blockAllowlist().get().stream()
                         .toList()
                         .contains(blockName)
                 || !(block instanceof EntityBlock));

@@ -11,13 +11,18 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 
-public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
-
-    public WandOfEnlivingmentItem() {
+public class GreaterWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
+    public GreaterWandOfEnlivingment() {
         super(new Properties()
-                .durability(ModStartupConfig.wandDurability.get())
-                .setNoRepair()
-                .rarity(Rarity.RARE));
+                .durability(ModStartupConfig.greaterWandDurability.get())
+                .stacksTo(1)
+                .fireResistant()
+                .rarity(Rarity.EPIC));
+    }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
     @Override
     protected boolean isAllowedMending() {
         return super.isAllowedMending()
-                || ModCommonConfig.wandConfig.allowMending().get();
+                || ModCommonConfig.greaterWandConfig.allowMending().get();
     }
 
     @Override
@@ -50,15 +55,15 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
     protected boolean isNotInDenyList(Block block) {
         var blockName = BuiltInRegistries.BLOCK.getKey(block).toString();
         var denylist = BlockDenylist.fromConfig(
-                ModCommonConfig.wandConfig.blockDenylist().get());
+                ModCommonConfig.greaterWandConfig.blockDenylist().get());
 
         return super.isNotInDenyList(block) && !denylist.matches(blockName);
     }
 
     private boolean isAllowedBlock(Block block) {
         var blockName = BuiltInRegistries.BLOCK.getKey(block).toString();
-        return (ModCommonConfig.wandConfig.allowBlockEntities().get()
-                || ModCommonConfig.wandConfig.blockAllowlist().get().stream()
+        return (ModCommonConfig.greaterWandConfig.allowBlockEntities().get()
+                || ModCommonConfig.greaterWandConfig.blockAllowlist().get().stream()
                         .toList()
                         .contains(blockName)
                 || !(block instanceof EntityBlock));
