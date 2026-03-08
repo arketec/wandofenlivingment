@@ -10,13 +10,13 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import org.jetbrains.annotations.NotNull;
 
 public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
 
     public WandOfEnlivingmentItem() {
         super(new Properties()
                 .durability(ModStartupConfig.wandDurability.get())
-                .setNoRepair()
                 .stacksTo(1)
                 .rarity(Rarity.RARE));
     }
@@ -24,6 +24,11 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return true;
+    }
+
+    @Override
+    public boolean isRepairable(@NotNull ItemStack stack) {
+        return super.isRepairable(stack) && isAllowedRepair();
     }
 
     @Override
@@ -40,6 +45,12 @@ public class WandOfEnlivingmentItem extends AbstractWandOfEnlivingmentItem {
     protected boolean isAllowedMending() {
         return super.isAllowedMending()
                 || ModCommonConfig.wandConfig.allowMending().get();
+    }
+
+    @Override
+    protected boolean isAllowedRepair() {
+        return super.isAllowedRepair()
+                || ModCommonConfig.wandConfig.allowRepair().get();
     }
 
     @Override

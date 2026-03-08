@@ -33,6 +33,8 @@ public class ModCommonConfig {
 
         allowMending = builder.comment("allows the mending enchantment to be applied to the wand")
                 .define("allowMending", false);
+        allowRepair =
+                builder.comment("allows repair items to be applied to the wand").define("allowRepair", false);
         builder.pop();
 
         // === Fragile Wand Section ===
@@ -52,6 +54,7 @@ public class ModCommonConfig {
     public static ModConfigSpec.ConfigValue<List<? extends String>> blockEntityAllowlist;
     public static ModConfigSpec.BooleanValue allowBlockEntities;
     public static ModConfigSpec.BooleanValue allowMending;
+    public static ModConfigSpec.BooleanValue allowRepair;
 
     public static WandConfig fragileWandConfig;
     public static WandConfig wandConfig;
@@ -86,13 +89,16 @@ public class ModCommonConfig {
                         "blocks with block entities that should be allowed to enliven (mod:block_name). Regex not supported\"\nNote: This overrides allowBlockEntities on the specified blocks")
                 .defineList(List.of("blockAllowlist"), () -> defaultAllowList, () -> "", e -> e instanceof String);
         ModConfigSpec.BooleanValue allowMending = null;
+        ModConfigSpec.BooleanValue allowRepair = null;
         if (!sectionName.equals("Fragile Wand")) {
             allowMending = builder.comment("allows the mending enchantment to be applied to the wand")
                     .define("allowMending", false);
+            allowRepair = builder.comment("allows repair items to be applied to the wand")
+                    .define("allowRepair", false);
         }
         builder.pop();
 
-        return new WandConfig(allowBlockEntities, denylist, allowlist, allowMending);
+        return new WandConfig(allowBlockEntities, denylist, allowlist, allowMending, allowRepair);
     }
 
     private static boolean isValidRegexEntry(Object e) {

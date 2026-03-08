@@ -68,6 +68,10 @@ public abstract class AbstractWandOfEnlivingmentItem extends Item {
         return isAllowedMending();
     }
 
+    public boolean canRepair() {
+        return isAllowedRepair();
+    }
+
     protected boolean isNotInDenyList(Block block) {
         var blockName = BuiltInRegistries.BLOCK.getKey(block).toString();
         var denylist = BlockDenylist.fromConfig(ModCommonConfig.blockDenylist.get());
@@ -107,5 +111,9 @@ public abstract class AbstractWandOfEnlivingmentItem extends Item {
 
     protected boolean isAllowedMending() {
         return ModCommonConfig.allowMending.get();
+    }
+
+    protected boolean isAllowedRepair() {
+        return ModCommonConfig.allowRepair.get();
     }
 }

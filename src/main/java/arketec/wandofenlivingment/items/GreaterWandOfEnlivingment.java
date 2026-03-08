@@ -10,6 +10,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import org.jetbrains.annotations.NotNull;
 
 public class GreaterWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
     public GreaterWandOfEnlivingment() {
@@ -31,6 +32,11 @@ public class GreaterWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
     }
 
     @Override
+    public boolean isRepairable(@NotNull ItemStack stack) {
+        return super.isRepairable(stack) && isAllowedRepair();
+    }
+
+    @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return true;
     }
@@ -44,6 +50,12 @@ public class GreaterWandOfEnlivingment extends AbstractWandOfEnlivingmentItem {
     protected boolean isAllowedMending() {
         return super.isAllowedMending()
                 || ModCommonConfig.greaterWandConfig.allowMending().get();
+    }
+
+    @Override
+    protected boolean isAllowedRepair() {
+        return super.isAllowedRepair()
+                || ModCommonConfig.greaterWandConfig.allowRepair().get();
     }
 
     @Override
